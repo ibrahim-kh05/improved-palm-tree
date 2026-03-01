@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haris & Zuni - A Love Story</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    overflow-x:hidden;
+    transition:background 1.5s ease;
+    color:white;
+}
+
+/* Smooth Scroll */
+html{
+    scroll-behavior:smooth;
+}
+
+/* Sections */
+section{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px 20px;
+}
+
+/* Glass Card */
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    padding:40px;
+    border-radius:20px;
+    max-width:850px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    animation:fadeIn 1.5s ease forwards;
+}
+
+h1{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+p{
+    font-size:1.2rem;
+    line-height:1.8;
+}
+
+button{
+    margin-top:30px;
+    padding:14px 35px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff4e88;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#222;
+    color:#fff;
+}
+
+/* Animations */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(40px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* Floating Hearts */
+.heart{
+    position:fixed;
+    bottom:-10px;
+    font-size:20px;
+    animation:floatUp 6s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0) scale(0.7); opacity:1;}
+    100%{transform:translateY(-110vh) scale(1.4); opacity:0;}
+}
+
+/* Rain Effect */
+.rain{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.drop{
+    position:absolute;
+    bottom:100%;
+    width:2px;
+    height:60px;
+    background:rgba(255,255,255,0.3);
+    animation:rain 1s linear infinite;
+}
+
+@keyframes rain{
+    to{transform:translateY(120vh);}
+}
+
+/* Dark Mode After Rejection */
+.dark{
+    background:linear-gradient(135deg,#141e30,#243b55);
+}
+
+/* Responsive */
+@media(max-width:768px){
+    h1{font-size:2rem;}
+    p{font-size:1rem;}
+    .card{padding:25px;}
+}
+</style>
+</head>
+<body>
+
+<div class="rain" id="rain"></div>
+
+<!-- Section 1 -->
+<section>
+<div class="card">
+<h1>Haris ❤️ Zuni</h1>
+<p id="typing1"></p>
+<button onclick="nextSection(1)">Continue</button>
+</div>
+</section>
+
+<!-- Section 2 -->
+<section>
+<div class="card">
+<h1>The Proposal 💍</h1>
+<p id="typing2"></p>
+<button onclick="nextSection(2)">Her Answer</button>
+</div>
+</section>
+
+<!-- Section 3 -->
+<section>
+<div class="card">
+<h1>Rejection 💔</h1>
+<p id="typing3"></p>
+<button onclick="nextSection(3)">What Happened Next?</button>
+</div>
+</section>
+
+<!-- Section 4 -->
+<section>
+<div class="card">
+<h1>He Broke Down...</h1>
+<p id="typing4"></p>
+<h2 style="margin-top:20px;">💔 Some love stories stay incomplete…</h2>
+</div>
+</section>
+
+<script>
+
+/* Typing Effect */
+function typeEffect(elementId, text, speed){
+    let i=0;
+    function typing(){
+        if(i<text.length){
+            document.getElementById(elementId).innerHTML+=text.charAt(i);
+            i++;
+            setTimeout(typing,speed);
+        }
+    }
+    typing();
+}
+
+typeEffect("typing1",
+"Haris never planned to fall in love. But when he met Zuni, something changed. Her smile became his peace. Her presence became his happiness. Slowly… deeply… he fell for her.",30);
+
+typeEffect("typing2",
+"With a trembling heart and hopeful eyes, Haris confessed everything. He told her how she meant the world to him. How he dreamed of building a future together.",30);
+
+typeEffect("typing3",
+"Zuni listened quietly. But her answer was not what he hoped for. She said she didn't feel the same. In that moment, Haris felt his heart shatter into pieces.",30);
+
+typeEffect("typing4",
+"He tried to stay strong. He tried to smile. But when he was alone… he cried. Not because he was weak. But because his love was real. The dreams he built faded into silence.",30);
+
+
+/* Scroll Navigation */
+function nextSection(n){
+    document.querySelectorAll("section")[n].scrollIntoView({behavior:"smooth"});
+    if(n==2){
+        document.body.classList.add("dark");
+        createRain();
+    }
+}
+
+/* Floating Hearts */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💔";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=Math.random()*20+10+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,500);
+
+/* Rain Creation */
+function createRain(){
+    const rain=document.getElementById("rain");
+    for(let i=0;i<100;i++){
+        const drop=document.createElement("div");
+        drop.classList.add("drop");
+        drop.style.left=Math.random()*100+"vw";
+        drop.style.animationDuration=Math.random()*1+0.5+"s";
+        rain.appendChild(drop);
+    }
+}
+
+</script>
+
+</body>
+</html>
